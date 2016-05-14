@@ -1,15 +1,22 @@
 package shop;
 
-import java.sql.Date;
+
 
 public class Demo {
 
 	public static void main(String[] args) {
 		Shop shop = new Shop();
+		ShopUI sui = new ShopUI(shop);
 		
 		shop.getPrices();
-		shop.availStor();
+		shop.getTodayRealization();
 		shop.get7daysRealization();
+
+		shop.getPrices();
+		
+		
+	
+
 
 
 	}

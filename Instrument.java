@@ -14,7 +14,7 @@ public class Instrument {
 		
 	}
 	
-	public Instrument(Color color, String brand, String model, int price, int quantity, int sold){
+	public Instrument(Color color, String brand, String model, int price){
 		this.color = color;
 		this.brand = brand;
 		this.model = model;

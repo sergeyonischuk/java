@@ -1,6 +1,11 @@
 package shop;
 
-import java.sql.Date;
+import java.awt.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 
 public class Shop {
 	
@@ -16,31 +21,43 @@ public class Shop {
 	private Realization[] journal = new Realization[realization];
 	
 	
+	
 	public Shop(){
 		
-		storage[0] = new Guitar(Color.BLACK, "Fender", "Les Paul", 25000, GuitarType.ELECTRIC, 1, 0);
-		storage[1] = new Guitar(Color.BLUE, "Cort", "X6", 7100, GuitarType.ELECTRIC, 3, 2);
-		storage[2] = new Guitar(Color.BLACK, "Fender", "A55", 8000, GuitarType.ACOUSTIC, 5, 3);
-		storage[3] = new Guitar(Color.RED, "Ibanez", "BV44A", 8500, GuitarType.ELECTRIC, 6, 1);
-		storage[4] = new Guitar(Color.YELLOW, "Phill Pro", "StartBass", 3400, GuitarType.BASS, 5, 4);
-		storage[5] = new Guitar(Color.BLACK, "Cort", "XB2", 4500, GuitarType.BASS, 2, 4);
-		storage[6] = new Guitar(Color.WHITE, "Fender", "New model", 4251, GuitarType.CLASSICAL, 2, 1);
-		storage[7] = new Guitar(Color.WHITE, "Line6", "Rock star", 5670, GuitarType.ELECTRIC, 1, 1);
-		storage[8] = new Guitar(Color.BLACK, "Yamaha", "C40", 3330, GuitarType.CLASSICAL, 2, 3);
-		storage[9] = new Piano(Color.BLACK, "Ukraine", "new", 4000, 88, 2, 2);
-		storage[10] = new Piano(Color.WHITE, "Yamaha", "new2", 8000, 88, 1, 2);
-		storage[11] = new Piano(Color.BLACK, "Yamaha", "new3", 10000, 84, 1, 0);
+		storage[0] = new Guitar(Color.BLACK, "Fender", "Les Paul", 25000, GuitarType.ELECTRIC);
+		storage[1] = new Guitar(Color.BLUE, "Cort", "X6", 7100, GuitarType.ELECTRIC);
+		storage[2] = new Guitar(Color.BLACK, "Fender", "A55", 8000, GuitarType.ACOUSTIC);
+		storage[3] = new Guitar(Color.RED, "Ibanez", "BV44A", 8500, GuitarType.ELECTRIC);
+		storage[4] = new Guitar(Color.YELLOW, "Phill Pro", "StartBass", 3400, GuitarType.BASS);
+		storage[5] = new Guitar(Color.BLACK, "Cort", "XB2", 4500, GuitarType.BASS);
+		storage[6] = new Guitar(Color.WHITE, "Fender", "New model", 4251, GuitarType.CLASSICAL);
+		storage[7] = new Guitar(Color.WHITE, "Line6", "Rock star", 5670, GuitarType.ELECTRIC);
+		storage[8] = new Guitar(Color.BLACK, "Yamaha", "C40", 3330, GuitarType.CLASSICAL);
+		storage[9] = new Piano(Color.BLACK, "Ukraine", "For noobs", 4000, 88);
+		storage[10] = new Piano(Color.WHITE, "Yamaha", "Piano", 8000, 88);
+		storage[11] = new Piano(Color.BLACK, "Yamaha", "MegaPiano", 10000, 84);
+
 		
 		customer[0] = new Customer("Sergey", "0638888888", "sergey.onischuk@ukr.net");
 		customer[1] = new Customer("Yaroslav", "044*333*22*11", "mail@ukr.net");
-		customer[2] = new Customer("Anastasiya", "096-368-58-21", "mail@ukr.net");
+		customer[2] = new Customer("Anastasiya", "096-368-58-21", "mail333@ukr.net");
 		
-		journal[0] = new Realization(storage[1], customer[1], 7100, 1, "2016-03-03");
-		journal[1] = new Realization(storage[6], customer[0], 4251, 1, "2016-03-03");
-		journal[2] = new Realization(storage[4], customer[2], 4500, 1, "2016-03-05");
-		journal[3] = new Realization(storage[8], customer[1], 3330, 1, "2016-03-08");
+		journal[0] = new Realization(storage[1], customer[1], 7100, 1, "01.05.2016");
+		journal[1] = new Realization(storage[6], customer[0], 4251, 1, "08.05.2016");
+		journal[2] = new Realization(storage[4], customer[2], 4500, 1, "12.05.2016");
+		journal[3] = new Realization(storage[8], customer[1], 3330, 1, "13.05.2016");
 		
 
+	}
+	
+	
+	public ArrayList<Instrument> getProducts(){
+		ArrayList<Instrument> list = new ArrayList<Instrument>();
+		for(int i = 0; i < storage.length; i++){
+			list.add(storage[i]);
+		}
+		list.removeAll(Collections.singleton(null));
+		return list;
 	}
 	
 	public void getPrices(){
@@ -48,6 +65,8 @@ public class Shop {
 		for(int i = 0; i < storage.length && storage[i] != null; i++){
 			System.out.println(storage[i].getModel() + ". Price: " + storage[i].getPrice());
 		}
+		System.out.println("*******");
+		
 	}
 	
 	public void availStor(){
@@ -58,46 +77,58 @@ public class Shop {
 	}
 	
 	public void get7daysRealization(){
-	
- 		String dateString = getDate().replaceAll("-", "");
-		Date date = new Date(System.currentTimeMillis());
-		int lastD = Integer.parseInt(dateString.substring(7, 8));
-		for(int i = 0; i < 7; i++){
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		Calendar c1 = Calendar.getInstance();
+		String today = sdf.format(c1.getTime()).toString();
+		int kostyl = 1;
+		
+		for(int j = 1; j <= 7; j++){
 
-			date.setDate(lastD - i);
-			int totalSum = 0;
-			System.out.println(date);
-				for(int j = indexJour - 1; j >= 0; j--){
-					if(date.toString().equals(journal[j].getData())){
+			System.out.println("Today is " + today + ":");
+				
+			for(int i = indexJour - kostyl; journal[i].getData().equals(today); i--){
+					System.out.println("Instrument: " + journal[i].getInstrument().getBrand() + " " 
+					+ journal[i].getInstrument().getModel() + "(" + journal[i].getAmount() + ")" + ". Customer: " + 
+							journal[i].getCustomer().getName() + ". Sum: " + journal[i].getSum());
+					kostyl++;
+				}
+			
+				
+			System.out.println("******");
+			c1.add(Calendar.DATE, -1);
+			today = sdf.format(c1.getTime()).toString();
 
-						totalSum += journal[j].getSum();
-						System.out.println("Instrument: " + journal[j].getInstrument().getBrand() + " " 
-								+ journal[j].getInstrument().getModel() + "(" + journal[j].getAmount() + ")" + ". Customer: " + 
-									journal[j].getCustomer().getName() + ". Sum: " + journal[j].getSum());
-						System.out.println();
-						
-					}
-					
-				}			
-				System.out.println("Total day sum: " + totalSum);
-				System.out.println("**********");
 		}
+		
 	}
 	
 	public void getTodayRealization(){
-		System.out.println("Today is " + getDate() + ":");
-			for(int i = indexJour - 1; journal[i].getData().equals(getDate()); i--){
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		Calendar c1 = Calendar.getInstance();
+//		c1.add(Calendar.DATE, -1);
+		String today = sdf.format(c1.getTime()).toString();
+		System.out.println(today);
+		
+		
+		
+		System.out.println("Today is " + today + ":");
+			for(int i = indexJour - 1; journal[i].getData().equals(today); i--){
 				System.out.println("Instrument: " + journal[i].getInstrument().getBrand() + " " 
 				+ journal[i].getInstrument().getModel() + "(" + journal[i].getAmount() + ")" + ". Customer: " + 
 						journal[i].getCustomer().getName() + ". Sum: " + journal[i].getSum());
 		}
+			System.out.println("******");
 	}
 	
 	public String getDate(){
-		return new Date(System.currentTimeMillis()).toString();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		return sdf.format(new Date());
 	}
 	
 
+	
 	
 	//сделать дополнительно, если будет время
 	
@@ -106,9 +137,25 @@ public class Shop {
 		
 	}
 	
-	public int addGuitar(){
-		return indexInst;
+	public void addGuitar(Color color, String brand, String model, int price, GuitarType gType){
+
+			storage[findStorPlace()] = new Guitar(color, brand, model, price, gType);
+			indexInst ++;
+		
+		
 	}
+	
+	
+	public int findStorPlace(){
+		for(int i = 0; i < storage.length; i++){
+			if(storage[i] == null){
+				return i;
+			}
+
+		}
+		throw new NullPointerException("нет свободного места на складе");
+	}
+	
 	public void deleteGuitar(){
 		
 	}
@@ -123,6 +170,8 @@ public class Shop {
 	public void addCustomer(){
 		
 	}
+	
+	
 	
 
 }

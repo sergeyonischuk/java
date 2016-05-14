@@ -7,8 +7,8 @@ public class Piano extends Instrument{
 	public Piano(){
 	}
 	
-	public Piano(Color color, String brand, String model, int price, int keys, int quantity, int sold){
-		super(color, brand, model, price, quantity, sold);
+	public Piano(Color color, String brand, String model, int price, int keys){
+		super(color, brand, model, price);
 		this.keys = keys;
 	}
 

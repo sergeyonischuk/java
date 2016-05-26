@@ -24,8 +24,11 @@ import javax.xml.stream.events.ProcessingInstruction;
 
 public class ShopUI {
 	
-	Shop shop = new Shop();
-	Instrument selectedInstrument;
+	
+	private Instrument selectedInstrument;
+	private Shop shop = new Shop();
+	
+
 	
 	public ShopUI(Shop shop){
 		this.shop = shop;
@@ -71,6 +74,19 @@ public class ShopUI {
 			prodButtons.add(rb);
 			pInstr.add(rb);
 			rb.setActionCommand(inst.get(i).getModel());
+			Instrument ins = inst.get(i);
+			
+			rb.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectedInstrument = ins;
+					
+				}
+				
+				
+			});
+			
 			
 		}
 		
@@ -97,9 +113,8 @@ public class ShopUI {
 			public void actionPerformed(ActionEvent e) {
 				Customer cust = new Customer(tfName.getText(), "88005553535", "3@mail.ru");
 				int count = Integer.parseInt(ftf.getText());
-				//
 				
-				shop.addRealiz(inst.get(3), cust, inst.get(3).getPrice(), count);
+				shop.addRealiz(selectedInstrument, cust, selectedInstrument.getPrice()*count, count);
 				
 			}
 		});
@@ -112,5 +127,7 @@ public class ShopUI {
 		return panel;
 		
 	}
+
+
 
 }

@@ -41,6 +41,7 @@ public class Shop {
 		customer[0] = new Customer("Sergey", "0638888888", "sergey.onischuk@ukr.net");
 		customer[1] = new Customer("Yaroslav", "044*333*22*11", "mail@ukr.net");
 		customer[2] = new Customer("Anastasiya", "096-368-58-21", "mail333@ukr.net");
+		customer[3] = null;
 		
 		journal[0] = new Realization(storage[1], customer[1], 7100, 1, "01.05.2016");
 		journal[1] = new Realization(storage[6], customer[0], 4251, 1, "08.05.2016");
@@ -134,6 +135,9 @@ public class Shop {
 	
 	public void addRealiz(Instrument instrument, Customer customer, int sum, int amount){
 		journal[indexJour] = new Realization(instrument, customer, sum, amount, getDate());
+		System.out.println("***new realization***");
+		System.out.println("customer: " + customer.getName() + ", tel: " + customer.getPhone());
+		System.out.println(instrument.getModel() + " " + sum + "$ " + amount + "רע");
 		
 	}
 	
@@ -167,8 +171,8 @@ public class Shop {
 		
 	}
 	
-	public void addCustomer(){
-		
+	public void addCustomer(String name, String phone, String mail){
+		customer[3] = new Customer(name, phone, mail);
 	}
 	
 	
